@@ -1,0 +1,33 @@
+{
+    "name": "xt/laravel-external-id",
+    "description": "Generate external id when saving Eloquent models",
+    "keywords": [
+        "xt",
+        "eloquent",
+        "laravel-external-id"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hiren",
+            "email": "hiren.reshamwala@gmail.com",
+            "homepage": "https://xiontechnologies.in",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/database": "^7.0|^8.0",
+        "illuminate/support": "^7.0.5|^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "XT\\ExternalId\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
