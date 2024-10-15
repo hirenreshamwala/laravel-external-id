@@ -28,8 +28,19 @@ trait HasExternalId
      */
     public function scopeFindByExternalId(Builder $query, $id, $columns = ['*']){
         $externalIdField = $this->getExternalIdOptions();
-        $query->where($externalIdField->externalIdField, '=', $id);
-        return $query->first($columns);
+        $query->where($externalIdField->externalIdField, '=', $id)->first($columns);
+    }
+
+    /**
+     * Find a model by its external id or fail.
+     *
+     * @param  mixed  $id
+     * @param  array  $columns
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|null
+     */
+    public function scopeFindByExternalIdOrFail(Builder $query, $id, $columns = ['*']){
+        $externalIdField = $this->getExternalIdOptions();
+        $query->where($externalIdField->externalIdField, '=', $id)->firstOrFail($columns);
     }
 
 

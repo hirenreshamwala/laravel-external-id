@@ -78,6 +78,14 @@ To get the record using external id, you can use `findByExternalId` method
 
 ```php
 YourEloquentModel::findByExternalId('<Your-ID>');
+
+YourEloquentModel::findByExternalId('<Your-ID>', ['column1', 'column2']);
+
+OR
+
+YourEloquentModel::findByExternalIdOrFail('<Your-ID>');
+
+YourEloquentModel::findByExternalIdOrFail('<Your-ID>', ['column1', 'column2']);
 ```
 
 
