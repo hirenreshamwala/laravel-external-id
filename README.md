@@ -74,6 +74,60 @@ class CreateYourEloquentModelTable extends Migration
 
 ```
 
+
+You can also specify prefix, length, numeric id only, time based id or create your own custom id
+```php
+namespace App;
+
+use XT\ExternalId\HasExternalId;
+use XT\ExternalId\ExternalIdOptions;
+use Illuminate\Database\Eloquent\Model;
+
+class YourEloquentModel extends Model
+{
+    use HasExternalId;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getExternalIdOptions() : ExternalIdOptions
+    {
+        // generate alpha numeric id of particular length
+        return ExternalIdOptions::create()
+            ->saveExternalIdTo('external_id')
+            ->setLength(16);
+        
+        // Generate id with prefix
+        return ExternalIdOptions::create()
+            ->saveExternalIdTo('external_id')    
+            ->setPrefix('order_'); // Output: order_<generated_id>
+            
+        // Generate numeric id of particular length
+        return ExternalIdOptions::create()
+            ->saveExternalIdTo('external_id')
+            ->setLength(16)
+            ->setIsNumberOnly(true); //Optional
+
+        // Generate incremental id
+        return ExternalIdOptions::create()
+            ->saveExternalIdTo('external_id')
+            ->incremental(1); // increment start from 1. Default value is: 1
+            
+        // Generate unix timestamp based id
+        return ExternalIdOptions::create()
+            ->saveExternalIdTo('external_id')
+            ->setIsTimeBase(true); // Output: 16628769732187896
+    
+        // You can create your own id generation logic
+        return ExternalIdOptions::create()
+            ->saveExternalIdTo('external_id')
+            ->customIdScope(function () {
+                return getRandomString(6, false).getRandomNumber(6);
+            });
+    }
+}
+```
+
 To get the record using external id, you can use `findByExternalId` method
 
 ```php
