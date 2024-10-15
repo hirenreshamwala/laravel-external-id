@@ -109,7 +109,14 @@ trait HasExternalId
     {
         $externalIdField = $this->externalIdOptions->externalIdField;
         $lastRecord = static::orderBy($externalIdField, 'desc')->first();
-        $lastIncrementalId = $lastRecord ? (int)str_replace($this->externalIdOptions->externalIdPrefix, '', $lastRecord->$externalIdField) : 0;
+        
+        // Check if there is no previous record and use startingIncrementalValue
+        if (!$lastRecord) {
+            return $this->externalIdOptions->externalIdPrefix . $this->externalIdOptions->startingIncrementalValue;
+        }
+        
+        // Extract the numeric part of the external ID and increment it
+        $lastIncrementalId = (int)str_replace($this->externalIdOptions->externalIdPrefix, '', $lastRecord->$externalIdField);
 
         return $this->externalIdOptions->externalIdPrefix . ($lastIncrementalId + 1);
     }
